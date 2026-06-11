@@ -9,36 +9,29 @@ from random import randint
 class FamilyStructure:
     def __init__(self, last_name):
         self.last_name = last_name
-        self._next_id = 1
-        self._members = [
-            {
-                "id": self._generate_id(),
-                "first_name": "John",
-                "last_name": last_name,
-                "age": 33,
-                "lucky_numbers": [7, 13, 22]
-            }
-        ]
+        self._members = []
 
-    # This method generates a unique incremental ID
-    def _generate_id(self):
-        generated_id = self._next_id
-        self._next_id += 1
-        return generated_id
+    def _generateId(self):
+        return randint(0, 99999999)
 
     def add_member(self, member):
-        ## You have to implement this method
-        ## Append the member to the list of _members
-        pass
+        member["id"] = self._generateId()
+        member["last_name"] = self.last_name
+        self._members.append(member)
+        return member
 
     def delete_member(self, id):
-        # fill this method and update the return
-        pass
+        for member in self._members:
+            if member["id"] == id:
+                self._members.remove(member)
+                return True
+        return False
 
     def get_member(self, id):
-        # fill this method and update the return
-        pass
+        for member in self._members:
+            if member["id"] == id:
+                return member
+        return None
 
-    # this method is done, it returns a list with all the family members
     def get_all_members(self):
         return self._members

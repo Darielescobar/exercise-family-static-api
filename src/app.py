@@ -11,8 +11,10 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 CORS(app)
 
+# Create the Jackson family
 jackson_family = FamilyStructure("Jackson")
 
+# Initial family members
 jackson_family.add_member({
     "first_name": "John",
     "age": 33,
@@ -42,13 +44,14 @@ def sitemap():
     return generate_sitemap(app)
 
 
-@app.route('/member', methods=['GET'])
+# GET all members
+@app.route('/members', methods=['GET'])
 def get_members():
     return jsonify(jackson_family.get_all_members()), 200
 
 
-
-@app.route('/member/<int:member_id>', methods=['GET'])
+# GET one member
+@app.route('/members/<int:member_id>', methods=['GET'])
 def get_member(member_id):
     member = jackson_family.get_member(member_id)
 
@@ -58,7 +61,8 @@ def get_member(member_id):
     return jsonify(member), 200
 
 
-@app.route('/member', methods=['POST'])
+# POST new member
+@app.route('/members', methods=['POST'])
 def add_member():
     body = request.get_json()
 
@@ -70,7 +74,8 @@ def add_member():
     return jsonify(new_member), 200
 
 
-@app.route('/member/<int:member_id>', methods=['DELETE'])
+# DELETE member
+@app.route('/members/<int:member_id>', methods=['DELETE'])
 def delete_member(member_id):
     deleted = jackson_family.delete_member(member_id)
 
